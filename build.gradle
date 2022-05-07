@@ -164,8 +164,8 @@ repositories {
 dependencies {
 	minecraft libs.minecraft
 	mappings loom.layered {
-		addLayer quiltMappings.mappings("org.quiltmc:quilt-mappings:${libs.versions.quilt.mappings.get()}:v2")
-		// officialMojangMappings() // Uncomment if you want to use Mojang mappings as your primary mappings, falling back on QM for parameters and Javadocs
+		officialMojangMappings()
+		parchment("org.parchmentmc.data:parchment-${libs.versions.minecraft.get()}:${libs.versions.parchment.get()}@zip")
 	}
 	modImplementation libs.quilt.loader
 
