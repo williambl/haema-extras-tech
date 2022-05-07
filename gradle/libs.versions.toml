@@ -3,7 +3,7 @@
 minecraft = "1.18.2"
 quilt_mappings = "1.18.2+build.22"
 parchment = "2022.05.02"
-quilt_loader = "0.16.0-beta.11"
+quilt_loader = "0.16.0-beta.16"
 
 fabric_kotlin = "1.7.4+kotlin.1.6.21"
 quilted_fabric_api = "1.0.0-beta.10+0.51.1-1.18.2"

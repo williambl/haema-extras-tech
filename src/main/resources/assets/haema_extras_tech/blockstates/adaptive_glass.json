@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "inventory": {
+      "model": "haema_extras_tech:block/adaptive_glass/normal"
+    },
+    "darkened=false": {
+      "model": "haema_extras_tech:block/adaptive_glass/normal"
+    },
+    "darkened=true": {
+      "model": "haema_extras_tech:block/adaptive_glass/darkened"
+    }
+  }
+}

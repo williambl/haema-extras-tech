@@ -19,10 +19,8 @@
 		},
 		"intermediate_mappings": "net.fabricmc:intermediary",
 		"entrypoints": {
-			"init": {
-				"adapter": "kotlin",
-				"value": "com.williambl.haema.extras.tech.HaemaExtrasTech"
-			}
+			"init": "com.williambl.haema.extras.tech.HaemaExtrasTechEntrypoint",
+			"client_init": "com.williambl.haema.extras.tech.client.HaemaExtrasTechClientEntrypoint"
 		},
 		"depends": [
 			{
