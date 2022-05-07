@@ -1,6 +1,7 @@
 plugins {
 	id 'maven-publish'
 	alias(libs.plugins.quilt.loom)
+	alias(libs.plugins.kotlin)
 }
 
 archivesBaseName = project.archives_base_name
@@ -13,6 +14,145 @@ repositories {
 	// Loom adds the essential maven repositories to download Minecraft and libraries from automatically.
 	// See https://docs.gradle.org/current/userguide/declaring_repositories.html
 	// for more information about repositories.
+	maven {
+		name "ParchmentMC"
+		url "https://maven.parchmentmc.org"
+		content {
+			includeGroup 'org.parchmentmc.data'
+		}
+	}
+	maven {
+		name = "FabricMC"
+		url = "https://maven.fabricmc.net/"
+	}
+	maven {
+		name = "JitPack"
+		url 'https://jitpack.io'
+	}
+	maven {
+		name = "Sonatype"
+		url 'https://oss.sonatype.org/content/repositories/snapshots'
+	}
+	maven {
+		name = "Jamies"
+		url "https://maven.jamieswhiteshirt.com/libs-release/"
+		content {
+			includeGroup "com.jamieswhiteshirt"
+		}
+	}
+	maven {
+		name = "Jared"
+		url 'https://maven.blamejared.com'
+		content {
+			includeGroup "vazkii.patchouli"
+		}
+	}
+	maven {
+		name = "Ladysnake Libs"
+		url = 'https://ladysnake.jfrog.io/artifactory/mods'
+		content {
+			includeGroup "io.github.ladysnake"
+			includeGroupByRegex "io\\.github\\.onyxstudios.*"
+			includeGroupByRegex "dev\\.onyxstudios.*"
+		}
+	}
+	maven {
+		name = "GeckoLib"
+		url = "https://dl.cloudsmith.io/public/geckolib3/geckolib/maven"
+		content {
+			includeGroup "software.bernie.geckolib"
+		}
+	}
+	maven {
+		name = "Cotton"
+		url = "https://server.bbkr.space/artifactory/libs-release/"
+		content {
+			includeGroup "io.github.cottonmc"
+		}
+	}
+	maven {
+		name = "Shedaniel"
+		url = "https://maven.shedaniel.me"
+		content {
+			includeGroupByRegex "dev\\.architectury.*"
+			includeGroupByRegex "me\\.shedaniel.*"
+			includeGroupByRegex "me\\.sargunvohra.*"
+		}
+	}
+	maven {
+		name = "Terraformers"
+		url = "https://maven.terraformersmc.com/releases/"
+		content {
+			includeGroup "io.github.prospector"
+			includeGroup "com.terraformersmc"
+		}
+	}
+	maven {
+		name = "Architectury"
+		url "https://maven.architectury.dev/"
+		content {
+			includeGroup "dev.architectury"
+		}
+	}
+	maven {
+		name = "cafeteria.dev"
+		url = 'https://maven.cafeteria.dev'
+		content {
+			includeGroup 'net.adriantodt.fabricmc'
+		}
+	}
+	maven {
+		name = "Flemmli97"
+		url "https://gitlab.com/api/v4/projects/21830712/packages/maven"
+		content {
+			includeGroup 'io.github.flemmli97'
+		}
+	}
+	maven {
+		name = "Gunpowder"
+		url = "https://maven.martmists.com/releases"
+		content {
+			includeGroup 'io.github.gunpowder'
+		}
+	}
+	maven {
+		name = "Permissions"
+		url = "https://maven.nucleoid.xyz"
+		content {
+			includeGroup 'eu.pb4'
+		}
+	}
+	maven {
+		name = "HavenKing"
+		url = "https://hephaestus.dev/release"
+		content {
+			includeGroup 'dev.inkwell'
+		}
+	}
+	maven {
+		name = "Flemmli97"
+		url = "https://gitlab.com/api/v4/projects/21830712/packages/maven"
+		content {
+			includeGroup 'io.github.flemmli97'
+		}
+	}
+	maven {
+		name = "Appleskin"
+		url = "https://maven.ryanliptak.com/"
+		content {
+			includeGroup 'squeek.appleskin'
+		}
+	}
+	maven {
+		name = "CurseMaven"
+		url "https://www.cursemaven.com"
+		content {
+			includeGroup "curse.maven"
+		}
+	}
+
+	mavenLocal()
+	mavenCentral()
 }
 
 // All the dependencies are declared at gradle/libs.version.toml and referenced with "libs.<id>"
@@ -25,9 +165,11 @@ dependencies {
 	}
 	modImplementation libs.quilt.loader
 
-	// QSL is not a complete API; You will need Quilted Fabric API to fill in the gaps.
-	// Quilted Fabric API will automatically pull in the correct QSL version.
 	modImplementation libs.quilted.fabric.api
+	modImplementation(libs.haema) {
+		exclude(group: "net.fabricmc.fabric-api")
+		exclude(module: "fabric-loader")
+	}
 }
 
 processResources {
@@ -79,5 +221,16 @@ publishing {
 		// Notice: This block does NOT have the same function as the block in the top level.
 		// The repositories here will be used for publishing your artifact, not for
 		// retrieving dependencies.
+	}
+}
+
+compileKotlin.kotlinOptions.jvmTarget = "17"
+
+/**
+ * https://dev.to/williambl/mixins-kotlin-and-default-methods-why-they-don-t-work-together-417d
+ */
+tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {
+	kotlinOptions {
+		freeCompilerArgs += '-Xjvm-default=all'
 	}
 }

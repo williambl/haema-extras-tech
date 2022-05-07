@@ -2,16 +2,21 @@
 # The latest versions are available at https://lambdaurora.dev/tools/import_quilt.html
 minecraft = "1.18.2"
 quilt_mappings = "1.18.2+build.22"
+parchment = "2022.05.02"
 quilt_loader = "0.16.0-beta.11"
 
+fabric_kotlin = "1.7.4+kotlin.1.6.21"
 quilted_fabric_api = "1.0.0-beta.10+0.51.1-1.18.2"
+haema = "1.9.5+1.18.2"
 
 [libraries]
 minecraft = { module = "com.mojang:minecraft", version.ref = "minecraft" }
 quilt_mappings = { module = "org.quiltmc:quilt-mappings", version.ref = "quilt_mappings" }
 quilt_loader = { module = "org.quiltmc:quilt-loader", version.ref = "quilt_loader" }
 
+fabric_language_kotlin = { module = "net.fabricmc:fabric-language-kotlin", version.ref = "fabric_kotlin" }
 quilted_fabric_api = { module = "org.quiltmc.quilted-fabric-api:quilted-fabric-api", version.ref = "quilted_fabric_api" }
+haema = { module = "com.williambl.haema:haema", version.ref = "haema" }
 
 # If you have multiple similar dependencies, you can declare a dependency bundle and reference it on the build script with "libs.bundles.example".
 # [bundles]
@@ -19,3 +24,4 @@ quilted_fabric_api = { module = "org.quiltmc.quilted-fabric-api:quilted-fabric-a
 
 [plugins]
 quilt_loom = { id = "org.quiltmc.loom", version = "0.12.+" }
+kotlin = { id = "org.jetbrains.kotlin.jvm", version = "1.6.21" }
