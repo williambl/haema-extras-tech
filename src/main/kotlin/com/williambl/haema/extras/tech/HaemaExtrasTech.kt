@@ -25,6 +25,8 @@ object HaemaExtrasTech: ModInitializer {
     val ADAPTIVE_GLASS_BE: BlockEntityType<AdaptiveGlassBlockEntity> = Registry.register(Registry.BLOCK_ENTITY_TYPE, id("adaptive_glass"), FabricBlockEntityTypeBuilder.create(::AdaptiveGlassBlockEntity).addBlock(ADAPTIVE_GLASS_BLOCK).build())
     val ADAPTIVE_GLASS_ITEM: BlockItem = Registry.register(Registry.ITEM, id("adaptive_glass"), BlockItem(ADAPTIVE_GLASS_BLOCK, Item.Properties().tab(ITEM_GROUP)))
 
+    val ULTRAVIOLET_FLASH_LAMP: UltravioletFlashLamp = Registry.register(Registry.ITEM, id("ultraviolet_flash_lamp"), UltravioletFlashLamp(Item.Properties().tab(ITEM_GROUP).durability(10)))
+
     override fun onInitialize(mod: ModContainer) {
         LOGGER.info("Hi there!")
     }
