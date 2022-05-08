@@ -1,0 +1,6 @@
+{
+  "parent": "haema_extras_tech:item/ultraviolet_flash_lamp/template",
+  "textures": {
+    "lantern": "haema_extras_tech:item/ultraviolet_flash_lamp/flashing"
+  }
+}

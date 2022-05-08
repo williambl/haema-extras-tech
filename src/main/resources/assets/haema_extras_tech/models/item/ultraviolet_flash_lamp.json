@@ -1,0 +1,20 @@
+{
+  "parent": "haema_extras_tech:item/ultraviolet_flash_lamp/template",
+  "textures": {
+    "lantern": "haema_extras_tech:item/ultraviolet_flash_lamp/off"
+  },
+  "overrides": [
+    {
+      "predicate": {
+        "haema_extras_tech:charging": 1
+      },
+      "model": "haema_extras_tech:item/ultraviolet_flash_lamp/charging"
+    },
+    {
+      "predicate": {
+        "haema_extras_tech:flashing": 1
+      },
+      "model": "haema_extras_tech:item/ultraviolet_flash_lamp/flashing"
+    }
+  ]
+}
