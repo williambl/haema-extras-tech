@@ -4,9 +4,11 @@ import com.williambl.haema.component.VampireComponent
 import com.williambl.haema.effect.SunlightSicknessEffect
 import net.minecraft.core.particles.ParticleTypes
 import net.minecraft.server.level.ServerLevel
+import net.minecraft.sounds.SoundEvents
 import net.minecraft.world.InteractionHand
 import net.minecraft.world.InteractionResultHolder
 import net.minecraft.world.effect.MobEffectInstance
+import net.minecraft.world.entity.Entity
 import net.minecraft.world.entity.EquipmentSlot
 import net.minecraft.world.entity.LivingEntity
 import net.minecraft.world.entity.MobType
@@ -30,7 +32,7 @@ class UltravioletFlashLamp(properties: Properties) : Item(properties) {
             level.sendParticles(ParticleTypes.FLASH, livingEntity.x, livingEntity.getY(0.5), livingEntity.z, 5, 2.0, 2.0, 2.0, 0.3)
         }
 
-        level.getEntities(null, AABB.ofSize(Vec3(livingEntity.x, livingEntity.getY(0.5), livingEntity.z), 5.0, 5.0, 5.0)) { e ->
+        level.getEntities(null, AABB.ofSize(Vec3(livingEntity.x, livingEntity.getY(0.5), livingEntity.z), 16.0, 16.0, 16.0)) { e ->
             e is LivingEntity && (VampireComponent.entityKey.getNullable(e)?.isVampire ?: false || e.mobType == MobType.UNDEAD)
         }.forEach { e ->
             when {
@@ -41,7 +43,12 @@ class UltravioletFlashLamp(properties: Properties) : Item(properties) {
         }
 
         stack.getOrCreateTagElement(LAMP_DATA_TAG).putLong(FLASHING_TAG, level.gameTime)
+        stack.getOrCreateTagElement(LAMP_DATA_TAG).putBoolean(CHARGING_TAG, false)
         stack.hurtAndBreak(1, livingEntity) { e -> e.broadcastBreakEvent(EquipmentSlot.MAINHAND) }
+        livingEntity.playSound(SoundEvents.GENERIC_EXPLODE, 0.5f, 3.0f)
+        if (livingEntity is Player) {
+            livingEntity.cooldowns.addCooldown(this, 10)
+        }
         return stack
     }
 
@@ -52,6 +59,7 @@ class UltravioletFlashLamp(properties: Properties) : Item(properties) {
 
     override fun use(level: Level, player: Player, usedHand: InteractionHand): InteractionResultHolder<ItemStack> {
         player.startUsingItem(usedHand)
+        player.playSound(HaemaExtrasTech.CAPACITOR_CHARGING, 1f, 1f)
         return InteractionResultHolder.consume(player.getItemInHand(usedHand))
     }
 

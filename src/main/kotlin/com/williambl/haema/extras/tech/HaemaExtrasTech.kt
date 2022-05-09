@@ -4,6 +4,8 @@ import com.google.common.base.Predicates
 import net.fabricmc.fabric.api.`object`.builder.v1.block.entity.FabricBlockEntityTypeBuilder
 import net.minecraft.core.Registry
 import net.minecraft.resources.ResourceLocation
+import net.minecraft.sounds.SoundEvent
+import net.minecraft.sounds.SoundEvents
 import net.minecraft.world.item.BlockItem
 import net.minecraft.world.item.CreativeModeTab
 import net.minecraft.world.item.Item
@@ -26,6 +28,8 @@ object HaemaExtrasTech: ModInitializer {
     val ADAPTIVE_GLASS_ITEM: BlockItem = Registry.register(Registry.ITEM, id("adaptive_glass"), BlockItem(ADAPTIVE_GLASS_BLOCK, Item.Properties().tab(ITEM_GROUP)))
 
     val ULTRAVIOLET_FLASH_LAMP: UltravioletFlashLamp = Registry.register(Registry.ITEM, id("ultraviolet_flash_lamp"), UltravioletFlashLamp(Item.Properties().tab(ITEM_GROUP).durability(10)))
+
+    val CAPACITOR_CHARGING: SoundEvent = Registry.register(Registry.SOUND_EVENT, id("capacitor_charging"), SoundEvent(id("capacitor_charging")))
 
     override fun onInitialize(mod: ModContainer) {
         LOGGER.info("Hi there!")
