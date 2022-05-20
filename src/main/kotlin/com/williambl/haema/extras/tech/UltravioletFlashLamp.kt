@@ -1,6 +1,7 @@
 package com.williambl.haema.extras.tech
 
 import com.williambl.haema.component.VampireComponent
+import com.williambl.haema.damagesource.SunlightDamageSource
 import com.williambl.haema.effect.SunlightSicknessEffect
 import com.williambl.haema.extras.tech.mixin.EntityAccessor
 import net.minecraft.core.particles.ParticleTypes
@@ -8,6 +9,7 @@ import net.minecraft.sounds.SoundEvents
 import net.minecraft.sounds.SoundSource
 import net.minecraft.tags.BlockTags
 import net.minecraft.util.Mth
+import net.minecraft.world.damagesource.DamageSource
 import net.minecraft.world.effect.MobEffectInstance
 import net.minecraft.world.entity.EntityType
 import net.minecraft.world.entity.LivingEntity
@@ -24,6 +26,7 @@ import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.level.gameevent.GameEvent
 import net.minecraft.world.phys.HitResult
 import net.minecraft.world.phys.Vec3
+import kotlin.math.max
 import kotlin.math.min
 import kotlin.math.sqrt
 
@@ -243,12 +246,20 @@ class UltravioletFlashLamp: ThrowableItemProjectile {
         }.forEach { e ->
             when {
                 e !is LivingEntity -> return@forEach
-                VampireComponent.entityKey.getNullable(e)?.isVampire ?: false -> e.addEffect(
-                    MobEffectInstance(
-                        SunlightSicknessEffect.instance, 4 * 20
+                VampireComponent.entityKey.getNullable(e)?.isVampire ?: false -> {
+                    e.addEffect(
+                        MobEffectInstance(
+                            SunlightSicknessEffect.instance, 4 * 20,
+                            e.getEffect(SunlightSicknessEffect.instance)?.amplifier?.plus(1)?.coerceAtMost(3) ?: 0
+                        )
                     )
-                )
-                e.mobType == MobType.UNDEAD && e !is Husk && e !is WitherBoss -> e.setSecondsOnFire(20)
+
+                    e.hurt(SunlightDamageSource.instance, max(5-0.5*this.distanceTo(e), 0.0).toFloat())
+                }
+                e.mobType == MobType.UNDEAD && e !is Husk && e !is WitherBoss -> {
+                    e.setSecondsOnFire(20)
+                    e.hurt(DamageSource.ON_FIRE, max(5-0.5*this.distanceTo(e), 0.0).toFloat())
+                }
             }
         }
     }
