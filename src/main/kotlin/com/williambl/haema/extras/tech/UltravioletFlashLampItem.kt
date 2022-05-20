@@ -50,8 +50,9 @@ class UltravioletFlashLampItem(properties: Properties) : Item(properties) {
 
         if (!level.isClientSide) {
             val entity = UltravioletFlashLamp(player, level)
-            itemStack.getOrCreateTagElement(LAMP_DATA_TAG).putBoolean(CHARGING_TAG, true)
-            entity.item = itemStack.copy()
+            entity.item = itemStack.copy().also {
+                it.getOrCreateTagElement(LAMP_DATA_TAG).putBoolean(CHARGING_TAG, true)
+            }
             entity.shootFromRotation(player, player.xRot, player.yRot, 0.0f, 1.5f, 1.0f)
             level.addFreshEntity(entity)
         }
