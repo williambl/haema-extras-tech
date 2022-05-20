@@ -13,6 +13,7 @@ import net.minecraft.world.item.BlockItem
 import net.minecraft.world.item.CreativeModeTab
 import net.minecraft.world.item.Item
 import net.minecraft.world.level.block.Blocks
+import net.minecraft.world.level.block.DispenserBlock
 import net.minecraft.world.level.block.entity.BlockEntityType
 import net.minecraft.world.level.block.state.BlockBehaviour
 import org.quiltmc.loader.api.ModContainer
@@ -35,7 +36,7 @@ object HaemaExtrasTech: ModInitializer {
     val CAPACITOR_CHARGING: SoundEvent = Registry.register(Registry.SOUND_EVENT, id("capacitor_charging"), SoundEvent(id("capacitor_charging")))
 
     override fun onInitialize(mod: ModContainer) {
-        LOGGER.info("Hi there!")
+        DispenserBlock.registerBehavior(ULTRAVIOLET_FLASH_LAMP, UltravioletFlashLampItem.DISPENSE_BEHAVIOUR)
     }
 
     fun id(path: String): ResourceLocation = ResourceLocation("haema_extras_tech", path)
